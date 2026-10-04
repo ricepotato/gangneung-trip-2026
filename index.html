@@ -246,7 +246,6 @@ DAYS.forEach((d,i) => {
 function show(day){
   document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.day===day)));
   document.querySelectorAll("#map [data-day]").forEach(g => g.style.opacity = (day===0 || +g.dataset.day===day) ? 1 : .08);
-  document.querySelectorAll(".day").forEach(s => s.hidden = !(day===0 || +s.dataset.day===day));
   try { localStorage.setItem("gn-day", day) } catch(e) {}
 }
 document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => show(+b.dataset.day)));
