@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>강릉 2박 3일 · 2026.10.6–8</title>
+<meta name="description" content="10월 6일부터 8일까지 강릉 여행 일정과 동선 지도">
+<meta name="theme-color" content="#f3f5f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131a1c" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* Layout: mobile-first single column; sticky day tabs; map card, then a timeline per day */
+:root{
+  --bg:#f3f5f4; --panel:#ffffff; --fg:#1d2a2e; --muted:#5d6b70; --line:#d5dddd;
+  --land:#ecefe9; --sea:#d6e6ee; --lake:#c2dbe6; --river:#a9c9d8; --coast:#9fb7bf;
+  --d1:#2f6fa8; --d2:#2e7d4f; --d3:#8a4f8f; --hotel:#1d2a2e; --warn:#a2621a;
+  --display:"Gowun Batang",ui-serif,serif;
+  --body:"IBM Plex Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#131a1c; --panel:#1b2427; --fg:#e4ecec; --muted:#9aabaf; --line:#2d3a3e;
+  --land:#1f2a2b; --sea:#16303d; --lake:#1d4152; --river:#24495a; --coast:#3d5a63;
+  --d1:#6fa9e0; --d2:#6cc28e; --d3:#c68dcb; --hotel:#e4ecec; --warn:#e0a35a; color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:18px}
+header h1{font-family:var(--display);font-size:clamp(26px,7vw,36px);line-height:1.25;margin:0;text-wrap:balance}
+header p{margin:6px 0 0;color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding:0;list-style:none}
+.facts li{font-size:13px;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:3px 10px}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;
+  padding-block:8px;margin-inline:-16px;padding-inline:16px;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:0 0 auto;font:inherit;font-size:14px;font-weight:500;border:1px solid var(--line);background:var(--panel);
+  color:var(--fg);padding:7px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:7px;min-height:40px}
+.tabs button[aria-pressed="true"]{border-color:var(--fg);box-shadow:inset 0 0 0 1px var(--fg)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--d1);outline-offset:2px}
+.sw{width:10px;height:10px;border-radius:50%;background:var(--c,var(--fg));flex:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+svg{display:block;width:100%;height:auto;touch-action:manipulation}
+.note{font-size:12.5px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line);margin:0}
+.day{padding:16px}
+.day[hidden]{display:none!important}
+.day h2{font-family:var(--display);font-size:21px;margin:0;display:flex;align-items:center;gap:8px}
+.day .sub{color:var(--muted);margin:2px 0 12px;font-size:14px}
+ol.tl{list-style:none;margin:0;padding:0;display:grid}
+.tl li{display:grid;grid-template-columns:56px 24px minmax(0,1fr);column-gap:8px;padding-block:9px;border-top:1px dashed var(--line)}
+.tl li:first-child{border-top:0}
+.t{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;padding-top:1px}
+.n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--c);color:var(--panel);font-size:12px;font-weight:600}
+.n.off{background:transparent;border:1.5px dashed var(--c);color:var(--c)}
+.n.hb{background:var(--hotel);font-size:9px}
+.n.none{background:transparent}
+.what{min-width:0}
+.what b{font-weight:600}
+.what .memo{display:block;color:var(--muted);font-size:13.5px}
+.what .warn{display:block;color:var(--warn);font-size:13px}
+.places{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.places a{font-size:12.5px;color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:2px 8px;background:var(--bg)}
+.places a::after{content:" ↗";color:var(--muted)}
+.extra h2{font-family:var(--display);font-size:19px;margin:0 0 8px}
+.extra ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.extra{padding:16px}
+footer{color:var(--muted);font-size:12.5px;text-align:center}
+.lbl{font-size:20px;fill:var(--fg);paint-order:stroke;stroke:var(--land);stroke-width:5px;stroke-linejoin:round;font-family:var(--body)}
+.area{font-size:19px;fill:var(--muted);font-style:italic;font-family:var(--body)}
+@media (prefers-reduced-motion:no-preference){#map [data-day]{transition:opacity .2s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>강릉 2박 3일</h1>
+    <p>2026년 10월 6일(화) ~ 8일(목)</p>
+    <ul class="facts">
+      <li>자차 · 오전 10시 서울 출발</li>
+      <li>숙소 씨마크 호텔</li>
+      <li>체크인 15:00</li>
+    </ul>
+  </header>
+
+  <nav class="tabs" role="group" aria-label="날짜 선택">
+    <button type="button" id="t0" data-day="0" aria-pressed="true">전체</button>
+    <button type="button" id="t1" data-day="1" aria-pressed="false" style="--c:var(--d1)"><span class="sw"></span>1일차 화</button>
+    <button type="button" id="t2" data-day="2" aria-pressed="false" style="--c:var(--d2)"><span class="sw"></span>2일차 수</button>
+    <button type="button" id="t3" data-day="3" aria-pressed="false" style="--c:var(--d3)"><span class="sw"></span>3일차 목</button>
+  </nav>
+
+  <section class="card" aria-label="동선 지도">
+    <svg id="map" role="img" aria-label="강릉 경포 일대 일정 개략도"></svg>
+    <p class="note">주소를 바탕으로 그린 개략도예요. ◆는 숙소, 점선 원은 여러 곳 중 하나를 고르는 곳이에요. 길 찾기는 장소 버튼을 눌러 네이버 지도에서 확인하세요.</p>
+  </section>
+
+  <div id="days" style="display:grid;gap:14px"></div>
+
+  <section class="card extra">
+    <h2>바꿔 끼울 수 있는 곳</h2>
+    <ul>
+      <li><b>선교장</b> · 오죽헌에서 약 2km. 오죽헌을 고르면 함께 보기 좋아요.</li>
+      <li><b>영진해변, 주문진 수산시장</b> · 차로 약 30분. 바다와 회를 더 즐기고 싶을 때.</li>
+      <li><b>정동진</b> · 차로 약 30분. 썬크루즈, 바다부채길.</li>
+      <li><b>대관령 양떼목장, 안반데기</b> · 차로 40분~1시간. 마지막 날 귀경길에 들르기 좋아요.</li>
+      <li><b>명주동, 중앙시장·월화거리</b> · 시내 구경과 닭강정 포장을 하고 싶을 때.</li>
+      <li><b>비 오는 날</b> · 아르떼뮤지엄과 강릉시립박물관은 실내라 옮기기 쉬워요.</li>
+    </ul>
+  </section>
+
+  <section class="card extra">
+    <h2>떠나기 전에 확인</h2>
+    <ul>
+      <li>아르떼뮤지엄, 오죽헌 운영시간과 휴관일</li>
+      <li>차현희 순두부 청국장 화요일 영업 여부</li>
+      <li>하루 키친, 최일순 순두부 영업일과 예약</li>
+      <li>씨마크 수영장 운영시간과 투숙객 이용 조건, 해피아워 시간</li>
+      <li>디오슬로 위치와 영업시간, 강릉샌드 영업시간</li>
+      <li>씨마크 체크아웃 시간</li>
+      <li>개천절(10/3)과 한글날(10/9) 사이라 영동고속도로 정체 가능</li>
+      <li>챙길 것: 수영복·수모, 객실용 와인</li>
+    </ul>
+  </section>
+
+  <footer>즐거운 여행 되세요</footer>
+</div>
+
+<script>
+// Approximate coordinates [lat, lon]
+const P = {
+  hotel:{n:"씨마크 호텔",ll:[37.8066,128.9072]},
+  beach:{n:"경포해변",ll:[37.8030,128.9098]},
+  garam:{n:"가람집 옹심이",ll:[37.7560,128.9395]},
+  cha:{n:"차현희 순두부 청국장",ll:[37.7918,128.9142]},
+  choi:{n:"최일순 짬뽕순두부",ll:[37.8008,128.9108]},
+  ojuk:{n:"오죽헌",ll:[37.7794,128.8786]},
+  arte:{n:"아르떼뮤지엄 강릉",ll:[37.7900,128.8962]},
+  anmok:{n:"안목 커피거리",ll:[37.7727,128.9478]},
+  gangmun:{n:"강문해변",ll:[37.7957,128.9196]},
+};
+const naver = q => "https://map.naver.com/p/search/" + encodeURIComponent("강릉 " + q);
+
+// key/keys: places on map · opt: pick one (dashed) · links: extra places without a map pin
+const DAYS = [
+  {c:"--d1", title:"1일차 · 10/6 화", sub:"도착해서 호텔에서 쉬는 날", stops:[
+    {t:"10:00", w:"서울 출발", m:"영동고속도로 약 2시간 30분~3시간, 휴게소 한 번"},
+    {t:"13:00", w:"점심 · 가람집 옹심이", key:"garam", m:"월요일 휴무라 화요일은 영업"},
+    {t:"14:00", w:"씨마크 도착, 라운지에서 커피", key:"hotel", m:"짐은 프런트에 맡기기"},
+    {t:"15:00", w:"체크인", key:"hotel"},
+    {t:"15:30", w:"호텔 수영장 · 실내 / 인피니티풀", key:"hotel", m:"수영복·수모 챙기기", x:"운영시간과 투숙객 이용 조건 확인"},
+    {t:"18:00", w:"저녁 · 차현희 순두부 청국장", key:"cha", m:"초당동, 호텔에서 차로 10분 안쪽", x:"화요일 영업 여부 확인"},
+    {t:"19:30", w:"호텔 해피아워, 와인 한잔", key:"hotel", m:"21시까지"},
+    {t:"21:00", w:"객실에서 넷플릭스 영화", key:"hotel", m:"후보: 상사에 대처하는 로맨틱한 자세 · 내 인생의 남자 · 글래스 어니언 · 어바웃 타임 · 라라랜드"},
+  ]},
+  {c:"--d2", title:"2일차 · 10/7 수", sub:"여유 있게, 오죽헌과 아르떼 중 하나만", stops:[
+    {t:"아침", w:"호텔 조식", key:"hotel"},
+    {t:"10:00", w:"경포해변 산책", key:"beach", m:"호텔 바로 앞"},
+    {t:"11:00", w:"호텔에서 휴식", key:"hotel"},
+    {t:"12:30", w:"점심 · 강릉 장칼국수", m:"식당은 미정", links:["장칼국수"]},
+    {t:"14:00", w:"오죽헌 또는 아르떼뮤지엄 (택1)", keys:["ojuk","arte"], opt:true, m:"둘 다 호텔에서 차로 10분 안쪽, 1~1.5시간. 맑으면 오죽헌, 비 오면 아르떼"},
+    {t:"15:30", w:"커피 타임 (택1)", keys:["anmok","gangmun"], opt:true, links:["테라로사 경포호수점"], m:"17:30까지 2시간 정도 여유"},
+    {t:"18:00", w:"저녁 (택1)", keys:["choi"], opt:true, links:["하루 키친"], x:"영업일과 예약 여부 확인"},
+    {t:"20:00", w:"객실에서 와인 타임", key:"hotel", m:"해피아워(21시까지)는 옵션"},
+  ]},
+  {c:"--d3", title:"3일차 · 10/8 목", sub:"호텔에서 느긋하게, 그리고 귀가", stops:[
+    {t:"아침", w:"호텔 조식", key:"hotel"},
+    {t:"09:30", w:"호텔 주변 / 경포해변 산책", key:"beach"},
+    {t:"11:00", w:"체크아웃", key:"hotel", x:"체크아웃 시간 확인"},
+    {t:"11:30", w:"카페 디오슬로", links:["디오슬로"], x:"위치와 영업시간 확인"},
+    {t:"13:15", w:"강릉샌드에서 기념품 사기", links:["강릉샌드"], x:"영업시간 확인"},
+    {t:"14:00", w:"서울로 귀가", m:"오후 귀경 정체 전에"},
+  ]},
+];
+
+// projection
+const B = {lat0:37.748, lat1:37.814, lon0:128.868, lon1:128.962};
+const K = Math.cos(37.78*Math.PI/180);
+const W = 760, H = Math.round(W*(B.lat1-B.lat0)/((B.lon1-B.lon0)*K));
+const xy = ([la,lo]) => [ (lo-B.lon0)/(B.lon1-B.lon0)*W, (B.lat1-la)/(B.lat1-B.lat0)*H ];
+const pts = a => a.map(p => xy(p).map(v=>v.toFixed(1)).join(",")).join(" ");
+
+const svg = document.getElementById("map");
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+const coast = [[37.830,128.884],[37.815,128.897],[37.806,128.909],[37.798,128.919],[37.786,128.932],[37.774,128.947],[37.762,128.956],[37.740,128.966]];
+const seaPoly = coast.concat([[37.740,128.99],[37.830,128.99]]);
+const river = [[37.752,128.862],[37.756,128.885],[37.757,128.905],[37.760,128.925],[37.765,128.942],[37.768,128.952]];
+const [lx,ly] = xy([37.7962,128.8992]);
+const lakeRx = 0.0085*K/(B.lon1-B.lon0)*W, lakeRy = 0.0068/(B.lat1-B.lat0)*H;
+
+const ns = "http://www.w3.org/2000/svg";
+const el = (tag, attrs, parent=svg) => { const e=document.createElementNS(ns,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); parent.appendChild(e); return e; };
+el("rect",{x:0,y:0,width:W,height:H,fill:"var(--land)"});
+el("polygon",{points:pts(seaPoly),fill:"var(--sea)"});
+el("polyline",{points:pts(coast),fill:"none",stroke:"var(--coast)","stroke-width":1.5});
+el("polyline",{points:pts(river),fill:"none",stroke:"var(--river)","stroke-width":5,"stroke-linecap":"round"});
+el("ellipse",{cx:lx,cy:ly,rx:lakeRx,ry:lakeRy,fill:"var(--lake)",transform:`rotate(-25 ${lx} ${ly})`});
+const area = (txt,ll) => { const [x,y]=xy(ll); el("text",{x,y,class:"area","text-anchor":"middle"}).textContent=txt; };
+area("경포호",[37.7965,128.8990]); area("동해",[37.775,128.962]); area("남대천",[37.7525,128.912]);
+area("강릉 시내",[37.7585,128.882]); area("초당동",[37.7880,128.9125]);
+
+const routeG = el("g",{}), dotG = el("g",{}), labelG = el("g",{});
+DAYS.forEach((d,i) => {
+  const col = `var(${d.c})`, g = el("g",{"data-day":i+1},routeG);
+  const seq = []; let num = 0;
+  d.stops.forEach(s => {
+    if (s.key === "hotel") { s.base = true; seq.push(xy(P.hotel.ll)); return; }
+    if (!s.key && !s.keys) return;
+    num++; s.num = num;
+    if (!s.opt) { const p = xy(P[s.key].ll), last = seq[seq.length-1]; if (!last || last[0]!==p[0] || last[1]!==p[1]) seq.push(p); }
+    (s.keys || [s.key]).forEach(k => {
+      const [x,y] = xy(P[k].ll), dg = el("g",{"data-day":i+1},dotG);
+      el("circle",{cx:x,cy:y,r:14,fill:s.opt?"var(--land)":col,stroke:col,"stroke-width":2,"stroke-dasharray":s.opt?"3 2":"none"},dg);
+      el("text",{x,y:y+5.5,"text-anchor":"middle","font-size":15,"font-weight":600,fill:s.opt?col:"var(--panel)","font-family":"var(--body)"},dg).textContent=num;
+    });
+  });
+  for (let a=0;a<seq.length-1;a++){ const p=seq[a], q=seq[a+1]; if(p[0]===q[0]&&p[1]===q[1]) continue;
+    el("line",{x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:col,"stroke-width":2.5,"stroke-opacity":.75,"stroke-linecap":"round"},g); }
+});
+const LBL = {hotel:[16,-12,"start"],beach:[18,4,"start"],garam:[-18,6,"end"],cha:[18,8,"start"],choi:[18,24,"start"],ojuk:[0,-20,"middle"],arte:[-18,6,"end"],anmok:[-18,6,"end"],gangmun:[18,6,"start"]};
+for (const k in P){ const [x,y]=xy(P[k].ll), [dx,dy,a]=LBL[k]; el("text",{x:x+dx,y:y+dy,"text-anchor":a,class:"lbl"},labelG).textContent=P[k].n; }
+{ const [x,y]=xy(P.hotel.ll); el("rect",{x:x-8,y:y-8,width:16,height:16,fill:"var(--hotel)",transform:`rotate(45 ${x} ${y})`},labelG); }
+
+// timeline
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const box = document.getElementById("days");
+DAYS.forEach((d,i) => {
+  const sec = document.createElement("section");
+  sec.className = "card day"; sec.dataset.day = i+1; sec.style.setProperty("--c",`var(${d.c})`);
+  sec.innerHTML = `<h2><span class="sw"></span>${d.title}</h2><p class="sub">${d.sub}</p><ol class="tl"></ol>`;
+  const ol = sec.querySelector("ol");
+  d.stops.forEach(s => {
+    const names = (s.keys || (s.key && s.key!=="hotel" ? [s.key] : [])).map(k => P[k].n).concat(s.links || []);
+    const badge = s.base ? `<span class="n hb">◆</span>` : s.num ? `<span class="n${s.opt?' off':''}">${s.num}</span>` : `<span class="n none"></span>`;
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="t">${s.t}</span>${badge}<span class="what"><b>${esc(s.w)}</b>`
+      + (s.m ? `<span class="memo">${esc(s.m)}</span>` : "")
+      + (s.x ? `<span class="warn">확인: ${esc(s.x)}</span>` : "")
+      + (names.length ? `<span class="places">${names.map(n=>`<a href="${naver(n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join("")}</span>` : "")
+      + `</span>`;
+    ol.appendChild(li);
+  });
+  box.appendChild(sec);
+});
+
+function show(day){
+  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.day===day)));
+  document.querySelectorAll("#map [data-day]").forEach(g => g.style.opacity = (day===0 || +g.dataset.day===day) ? 1 : .08);
+  document.querySelectorAll(".day").forEach(s => s.hidden = !(day===0 || +s.dataset.day===day));
+  try { localStorage.setItem("gn-day", day) } catch(e) {}
+}
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => show(+b.dataset.day)));
+// open on today's tab during the trip
+let start = 0;
+const today = new Date(), md = (today.getMonth()+1)*100 + today.getDate();
+if (today.getFullYear()===2026 && md>=1006 && md<=1008) start = md-1005;
+else { try { start = +(localStorage.getItem("gn-day") || 0) } catch(e) {} }
+show(start);
+</script>
+</body>
+</html>
