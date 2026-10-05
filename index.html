@@ -136,6 +136,7 @@ const P = {
   choi:{n:"최일순 짬뽕순두부",ll:[37.8008,128.9108]},
   seoul:{n:"← 서울 (강릉IC)",ll:[37.7640,128.8700]},
   terarosa:{n:"테라로사 경포호수점",ll:[37.7918,128.9002]},
+  hasla:{n:"↓ 하슬라아트월드 (정동진 방향)",ll:[37.7495,128.9560]},
   ojuk:{n:"오죽헌",ll:[37.7794,128.8786]},
   arte:{n:"아르떼뮤지엄 강릉",ll:[37.7900,128.8962]},
   anmok:{n:"안목 커피거리",ll:[37.7727,128.9478]},
@@ -156,14 +157,14 @@ const DAYS = [
     {t:"19:30", w:"호텔 해피아워, 와인 한잔", key:"hotel", m:"21시까지"},
     {t:"21:00", w:"객실에서 영화", key:"hotel", m:"후보: 상사에 대처하는 로맨틱한 자세(넷플릭스) · 세계의 주인(넷플릭스) · 데이앤나잇(쿠팡플레이)"},
   ]},
-  {c:"--d2", title:"2일차 · 10/7 수", sub:"여유 있게, 오죽헌과 아르떼 중 하나만", stops:[
+  {c:"--d2", title:"2일차 · 10/7 수", sub:"하슬라아트월드, 그리고 오죽헌과 아르떼 중 하나", stops:[
     {t:"06:24", w:"잠깐 일어나 일출 구경, 다시 잠들기", key:"hotel", m:"일출 약 06:24, 05:58쯤부터 하늘이 밝아져요. 객실에서 동해 위로"},
     {t:"아침", w:"호텔 조식", key:"hotel"},
-    {t:"10:00", w:"경포해변 산책", key:"beach", m:"호텔 바로 앞"},
-    {t:"11:00", w:"호텔에서 휴식", key:"hotel"},
-    {t:"12:30", w:"점심 (택1)", links:["봄바스 타코","나나"], x:"영업일과 웨이팅 확인"},
-    {t:"14:00", w:"오죽헌 또는 아르떼뮤지엄 (택1)", keys:["ojuk","arte"], opt:true, m:"둘 다 호텔에서 차로 10분 안쪽, 1~1.5시간. 맑으면 오죽헌, 비 오면 아르떼"},
-    {t:"15:30", w:"커피 타임 (택1)", keys:["terarosa","anmok","gangmun"], opt:true, m:"17:30까지 2시간 정도 여유"},
+    {t:"10:00", w:"경포해변 산책", key:"beach", m:"호텔 바로 앞, 30분 정도"},
+    {t:"11:00", w:"하슬라아트월드", key:"hasla", m:"정동진 쪽, 호텔에서 차로 약 30분. 바다 보이는 야외 조각공원과 미술관, 1시간 30분 정도"},
+    {t:"13:00", w:"점심 (택1)", links:["봄바스 타코","나나"], x:"영업일과 웨이팅 확인"},
+    {t:"14:30", w:"오죽헌 또는 아르떼뮤지엄 (택1)", keys:["ojuk","arte"], opt:true, m:"둘 다 호텔에서 차로 10분 안쪽, 1~1.5시간. 맑으면 오죽헌, 비 오면 아르떼"},
+    {t:"16:00", w:"커피 타임 (택1)", keys:["terarosa","anmok","gangmun"], opt:true, m:"17:45까지"},
     {t:"18:00", w:"저녁 (택1)", keys:["choi"], opt:true, links:["하루 키친"], x:"영업일과 예약 여부 확인"},
     {t:"20:00", w:"객실에서 와인 타임", key:"hotel", m:"해피아워(21시까지)는 옵션"},
   ]},
@@ -233,7 +234,7 @@ DAYS.forEach((d,i) => {
     // a stop without a map pin in between: dashed
     el("line",{x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:col,"stroke-width":3,"stroke-opacity":.8,"stroke-linecap":"round","stroke-dasharray":seq[a+1].via?"8 6":"none"},g); }
 });
-const LBL = {seoul:[8,-18,"start"],terarosa:[0,-20,"middle"],hotel:[16,-12,"start"],beach:[18,4,"start"],garam:[-18,6,"end"],cha:[18,8,"start"],choi:[18,24,"start"],ojuk:[0,-20,"middle"],arte:[-18,6,"end"],anmok:[-18,6,"end"],gangmun:[18,6,"start"]};
+const LBL = {hasla:[-18,-8,"end"],seoul:[8,-18,"start"],terarosa:[0,-20,"middle"],hotel:[16,-12,"start"],beach:[18,4,"start"],garam:[-18,6,"end"],cha:[18,8,"start"],choi:[18,24,"start"],ojuk:[0,-20,"middle"],arte:[-18,6,"end"],anmok:[-18,6,"end"],gangmun:[18,6,"start"]};
 for (const k in P){ const [x,y]=xy(P[k].ll), [dx,dy,a]=LBL[k]; el("text",{x:x+dx,y:y+dy,"text-anchor":a,class:"lbl"},labelG).textContent=P[k].n; }
 { const [x,y]=xy(P.seoul.ll); el("circle",{cx:x,cy:y,r:7,fill:"var(--hotel)"},labelG); }
 { const [x,y]=xy(P.hotel.ll); el("rect",{x:x-8,y:y-8,width:16,height:16,fill:"var(--hotel)",transform:`rotate(45 ${x} ${y})`},labelG); }
