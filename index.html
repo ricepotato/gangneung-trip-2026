@@ -141,11 +141,12 @@ const P = {
   anmok:{n:"안목 커피거리",ll:[37.7727,128.9478]},
   gangmun:{n:"강문해변",ll:[37.7957,128.9196]},
 };
-const naver = q => "https://map.naver.com/p/search/" + encodeURIComponent("강릉 " + q);
+const naver = q => "https://map.naver.com/p/search/" + encodeURIComponent((q.includes("아마리스") ? "" : "강릉 ") + q);
 
 // key/keys: places on map · opt: pick one (dashed) · links: extra places without a map pin
 const DAYS = [
   {c:"--d1", title:"1일차 · 10/6 화", sub:"도착해서 호텔에서 쉬는 날", stops:[
+    {t:"09:45", w:"카페 아마리스에서 커피 테이크아웃", links:["카페 아마리스"], m:"출발 전에 들르기"},
     {t:"10:00", w:"서울 출발", key:"seoul", m:"영동고속도로 약 2시간 30분~3시간, 휴게소 한 번"},
     {t:"13:00", w:"점심 · 가람집 옹심이", key:"garam", m:"월요일 휴무라 화요일은 영업"},
     {t:"14:00", w:"씨마크 도착, 라운지에서 커피", key:"hotel", m:"짐은 프런트에 맡기기"},
